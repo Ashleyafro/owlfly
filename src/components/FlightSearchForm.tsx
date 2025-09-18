@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plane, Search } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
+import { Plane, Search, CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FlightSearchData {
   personalData: {
@@ -14,7 +19,9 @@ interface FlightSearchData {
   };
   origin: string;
   destination: string;
-  departureDate: string;
+  departureDate: Date | undefined;
+  returnDate?: Date | undefined;
+  isRoundTrip: boolean;
   flightClass: string;
   priceRange: {
     min: string;
@@ -35,7 +42,9 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
     },
     origin: "",
     destination: "",
-    departureDate: "",
+    departureDate: undefined,
+    returnDate: undefined,
+    isRoundTrip: false,
     flightClass: "",
     priceRange: {
       min: "",
@@ -119,6 +128,16 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
           {/* Detalles del Vuelo */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Detalles del Vuelo</h3>
+            {/* Toggle de Tipo de Viaje */}
+            <div className="flex items-center space-x-2 mb-4">
+              <Switch 
+                id="round-trip"
+                checked={formData.isRoundTrip}
+                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isRoundTrip: checked }))}
+              />
+              <Label htmlFor="round-trip">Viaje de ida y vuelta</Label>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="origin">Origen</Label>
@@ -141,15 +160,65 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="departureDate">Fecha</Label>
-                <Input
-                  id="departureDate"
-                  type="date"
-                  value={formData.departureDate}
-                  onChange={(e) => setFormData(prev => ({ ...prev, departureDate: e.target.value }))}
-                  required
-                />
+                <Label>Fecha de Salida</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !formData.departureDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {formData.departureDate ? format(formData.departureDate, "dd/MM/yyyy") : "Seleccionar fecha"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={formData.departureDate}
+                      onSelect={(date) => setFormData(prev => ({ ...prev, departureDate: date }))}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className="p-3 pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
+              {formData.isRoundTrip && (
+                <div className="space-y-2">
+                  <Label>Fecha de Regreso</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !formData.returnDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {formData.returnDate ? format(formData.returnDate, "dd/MM/yyyy") : "Seleccionar fecha"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={formData.returnDate}
+                        onSelect={(date) => setFormData(prev => ({ ...prev, returnDate: date }))}
+                        disabled={(date) => {
+                          const today = new Date();
+                          const minDate = formData.departureDate || today;
+                          return date < minDate;
+                        }}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="flightClass">Clase</Label>
                 <Select value={formData.flightClass} onValueChange={(value) => setFormData(prev => ({ ...prev, flightClass: value }))}>

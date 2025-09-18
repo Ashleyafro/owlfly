@@ -11,7 +11,9 @@ interface FlightSearchData {
   };
   origin: string;
   destination: string;
-  departureDate: string;
+  departureDate: Date | undefined;
+  returnDate?: Date | undefined;
+  isRoundTrip: boolean;
   flightClass: string;
   priceRange: {
     min: string;
