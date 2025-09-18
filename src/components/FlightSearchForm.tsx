@@ -23,6 +23,7 @@ interface FlightSearchData {
   returnDate?: Date | undefined;
   isRoundTrip: boolean;
   flightClass: string;
+  passengers: number;
   priceRange: {
     min: string;
     max: string;
@@ -46,6 +47,7 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
     returnDate: undefined,
     isRoundTrip: false,
     flightClass: "",
+    passengers: 1,
     priceRange: {
       min: "",
       max: "",
@@ -230,6 +232,19 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
                     <SelectItem value="business">Business</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="passengers">Pasajeros</Label>
+                <Input
+                  id="passengers"
+                  type="number"
+                  value={formData.passengers}
+                  onChange={(e) => setFormData(prev => ({ ...prev, passengers: parseInt(e.target.value) || 1 }))}
+                  min="1"
+                  max="9"
+                  placeholder="1"
+                  required
+                />
               </div>
             </div>
           </div>
