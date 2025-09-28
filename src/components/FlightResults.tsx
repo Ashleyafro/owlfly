@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Star } from "lucide-react";
 import { Clock, DollarSign, Plane } from "lucide-react";
 
 interface Flight {
@@ -17,6 +20,7 @@ interface Flight {
   duration: string;
   price: number;
   class: string;
+  rating: number;
 }
 
 interface FlightResultsProps {
@@ -26,9 +30,30 @@ interface FlightResultsProps {
 }
 
 export const FlightResults = ({ flights, origin, destination }: FlightResultsProps) => {
+  const [sortBy, setSortBy] = useState<string>("");
+  
   if (flights.length === 0) {
     return null;
   }
+
+  const convertDurationToMinutes = (duration: string): number => {
+    const hours = parseInt(duration.match(/(\d+)h/)?.[1] || '0');
+    const minutes = parseInt(duration.match(/(\d+)m/)?.[1] || '0');
+    return hours * 60 + minutes;
+  };
+
+  const sortedFlights = [...flights].sort((a, b) => {
+    switch (sortBy) {
+      case 'price-asc':
+        return a.price - b.price;
+      case 'duration-asc':
+        return convertDurationToMinutes(a.duration) - convertDurationToMinutes(b.duration);
+      case 'rating-desc':
+        return b.rating - a.rating;
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-4">
@@ -40,9 +65,25 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
           {flights.length} vuelos encontrados
         </p>
       </div>
+
+      {/* Filtros de ordenamiento */}
+      <div className="flex justify-center mb-6">
+        <div className="w-full max-w-xs">
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger>
+              <SelectValue placeholder="Ordenar por..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="price-asc">Precio (menor a mayor)</SelectItem>
+              <SelectItem value="duration-asc">Duración (menor a mayor)</SelectItem>
+              <SelectItem value="rating-desc">Mejor valorados</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       
       <div className="space-y-4">
-        {flights.map((flight) => (
+        {sortedFlights.map((flight) => (
           <Card key={flight.id} className="hover:shadow-lg transition-shadow duration-300 bg-gradient-to-r from-card to-secondary/20">
             <CardContent className="p-6">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -84,11 +125,15 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
                   </div>
                 </div>
 
-                {/* Price and Class */}
+                {/* Price, Class and Rating */}
                 <div className="text-center lg:text-right space-y-2">
                   <div className="flex items-center justify-center lg:justify-end">
                     <DollarSign className="h-5 w-5 text-sky-primary mr-1" />
                     <span className="text-2xl font-bold text-sky-primary">${flight.price}</span>
+                  </div>
+                  <div className="flex items-center justify-center lg:justify-end space-x-1 mb-2">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium text-foreground">{flight.rating}</span>
                   </div>
                   <Badge 
                     variant={flight.class === 'business' ? 'default' : 'secondary'}

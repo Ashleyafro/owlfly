@@ -36,6 +36,7 @@ interface Flight {
   duration: string;
   price: number;
   class: string;
+  rating: number;
 }
 
 const mockFlights: Flight[] = [
@@ -47,7 +48,8 @@ const mockFlights: Flight[] = [
     arrival: { time: "11:45", airport: "BCN" },
     duration: "3h 15m",
     price: 299,
-    class: "economy"
+    class: "economy",
+    rating: 4.2
   },
   {
     id: "2",
@@ -57,7 +59,8 @@ const mockFlights: Flight[] = [
     arrival: { time: "17:35", airport: "BCN" },
     duration: "3h 15m",
     price: 450,
-    class: "business"
+    class: "business",
+    rating: 4.7
   },
   {
     id: "3",
@@ -65,9 +68,10 @@ const mockFlights: Flight[] = [
     flightNumber: "VY 9012",
     departure: { time: "19:10", airport: "MAD" },
     arrival: { time: "22:25", airport: "BCN" },
-    duration: "3h 15m",
+    duration: "2h 45m",
     price: 189,
-    class: "economy"
+    class: "economy",
+    rating: 3.8
   },
   {
     id: "4",
@@ -75,9 +79,10 @@ const mockFlights: Flight[] = [
     flightNumber: "UX 3456",
     departure: { time: "06:45", airport: "MAD" },
     arrival: { time: "10:00", airport: "BCN" },
-    duration: "3h 15m",
+    duration: "3h 30m",
     price: 320,
-    class: "economy"
+    class: "economy",
+    rating: 4.1
   },
   {
     id: "5",
@@ -85,9 +90,10 @@ const mockFlights: Flight[] = [
     flightNumber: "FR 7890",
     departure: { time: "12:15", airport: "MAD" },
     arrival: { time: "15:30", airport: "BCN" },
-    duration: "3h 15m",
+    duration: "2h 55m",
     price: 156,
-    class: "economy"
+    class: "economy",
+    rating: 3.5
   }
 ];
 
