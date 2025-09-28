@@ -33,6 +33,7 @@ interface Flight {
   price: number;
   class: string;
   rating: number;
+  isDirect: boolean;
 }
 
 const mockFlights: Flight[] = [
@@ -45,7 +46,8 @@ const mockFlights: Flight[] = [
     duration: "3h 15m",
     price: 299,
     class: "economy",
-    rating: 4.2
+    rating: 4.2,
+    isDirect: true
   },
   {
     id: "2",
@@ -56,7 +58,8 @@ const mockFlights: Flight[] = [
     duration: "3h 15m",
     price: 450,
     class: "business",
-    rating: 4.7
+    rating: 4.7,
+    isDirect: true
   },
   {
     id: "3",
@@ -67,7 +70,8 @@ const mockFlights: Flight[] = [
     duration: "2h 45m",
     price: 189,
     class: "economy",
-    rating: 3.8
+    rating: 3.8,
+    isDirect: true
   },
   {
     id: "4",
@@ -78,7 +82,8 @@ const mockFlights: Flight[] = [
     duration: "3h 30m",
     price: 320,
     class: "economy",
-    rating: 4.1
+    rating: 4.1,
+    isDirect: false
   },
   {
     id: "5",
@@ -89,7 +94,8 @@ const mockFlights: Flight[] = [
     duration: "2h 55m",
     price: 156,
     class: "economy",
-    rating: 3.5
+    rating: 3.5,
+    isDirect: true
   }
 ];
 
