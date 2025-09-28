@@ -12,11 +12,6 @@ import { Plane, Search, CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FlightSearchData {
-  personalData: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
   origin: string;
   destination: string;
   departureDate: Date | undefined;
@@ -36,11 +31,6 @@ interface FlightSearchFormProps {
 
 export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
   const [formData, setFormData] = useState<FlightSearchData>({
-    personalData: {
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
     origin: "",
     destination: "",
     departureDate: undefined,
@@ -57,16 +47,6 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(formData);
-  };
-
-  const updatePersonalData = (field: keyof FlightSearchData['personalData'], value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      personalData: {
-        ...prev.personalData,
-        [field]: value
-      }
-    }));
   };
 
   const updatePriceRange = (field: keyof FlightSearchData['priceRange'], value: string) => {
@@ -89,44 +69,6 @@ export const FlightSearchForm = ({ onSearch }: FlightSearchFormProps) => {
       </CardHeader>
       <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Datos Personales */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-foreground">Datos Personales</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">Nombre</Label>
-                <Input
-                  id="firstName"
-                  value={formData.personalData.firstName}
-                  onChange={(e) => updatePersonalData('firstName', e.target.value)}
-                  placeholder="Ingresa tu nombre"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Apellido</Label>
-                <Input
-                  id="lastName"
-                  value={formData.personalData.lastName}
-                  onChange={(e) => updatePersonalData('lastName', e.target.value)}
-                  placeholder="Ingresa tu apellido"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.personalData.email}
-                  onChange={(e) => updatePersonalData('email', e.target.value)}
-                  placeholder="tu@email.com"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Detalles del Vuelo */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Detalles del Vuelo</h3>

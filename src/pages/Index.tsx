@@ -4,17 +4,13 @@ import { FlightResults } from "@/components/FlightResults";
 import heroAirplane from "@/assets/hero-airplane.jpg";
 
 interface FlightSearchData {
-  personalData: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
   origin: string;
   destination: string;
   departureDate: Date | undefined;
   returnDate?: Date | undefined;
   isRoundTrip: boolean;
   flightClass: string;
+  passengers: number;
   priceRange: {
     min: string;
     max: string;
