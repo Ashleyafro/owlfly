@@ -74,8 +74,8 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
               <SelectValue placeholder="Ordenar por..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="price-asc">Precio (menor a mayor)</SelectItem>
-              <SelectItem value="duration-asc">Duración (menor a mayor)</SelectItem>
+              <SelectItem value="price-asc">Más baratos</SelectItem>
+              <SelectItem value="duration-asc">Más rápidos</SelectItem>
               <SelectItem value="rating-desc">Mejor valorados</SelectItem>
             </SelectContent>
           </Select>
