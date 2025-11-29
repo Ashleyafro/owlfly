@@ -100,8 +100,21 @@ const mockFlights: Flight[] = [
 ];
 
 const Index = () => {
-  const [searchResults, setSearchResults] = useState<Flight[]>([]);
-  const [searchData, setSearchData] = useState<FlightSearchData | null>(null);
+  // Initialize with random flights on page load
+  const [searchResults, setSearchResults] = useState<Flight[]>(() => {
+    const shuffled = [...mockFlights].sort(() => Math.random() - 0.5);
+    return shuffled;
+  });
+  const [searchData, setSearchData] = useState<FlightSearchData | null>({
+    origin: "MAD",
+    destination: "BCN",
+    departureDate: undefined,
+    returnDate: undefined,
+    isRoundTrip: false,
+    flightClass: "economy",
+    passengers: 1,
+    priceRange: { min: "", max: "" }
+  });
 
   const handleSearch = (data: FlightSearchData) => {
     setSearchData(data);
