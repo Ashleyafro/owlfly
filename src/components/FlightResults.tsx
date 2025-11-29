@@ -40,9 +40,9 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
   };
 
   // Create filtered arrays for each category
-  const bestRatedFlights = [...flights].sort((a, b) => b.rating - a.rating).slice(0, 3);
-  const fastestFlights = [...flights].sort((a, b) => convertDurationToMinutes(a.duration) - convertDurationToMinutes(b.duration)).slice(0, 3);
-  const cheapestFlights = [...flights].sort((a, b) => a.price - b.price).slice(0, 3);
+  const bestRatedFlights = [...flights].sort((a, b) => b.rating - a.rating).slice(0, 10);
+  const fastestFlights = [...flights].sort((a, b) => convertDurationToMinutes(a.duration) - convertDurationToMinutes(b.duration)).slice(0, 10);
+  const cheapestFlights = [...flights].sort((a, b) => a.price - b.price).slice(0, 10);
   const directFlights = flights.filter(flight => flight.isDirect);
 
   const renderFlightCard = (flight: Flight) => (
@@ -146,7 +146,7 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
         <TabsContent value="mejor-valorados" className="space-y-4 mt-6">
           <div className="text-center mb-4">
             <h3 className="text-lg font-semibold text-foreground">Mejor valorados</h3>
-            <p className="text-sm text-muted-foreground">Los 3 vuelos con mejor puntuación</p>
+            <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor puntuación</p>
           </div>
           {bestRatedFlights.map(renderFlightCard)}
         </TabsContent>
@@ -154,7 +154,7 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
         <TabsContent value="mas-rapidos" className="space-y-4 mt-6">
           <div className="text-center mb-4">
             <h3 className="text-lg font-semibold text-foreground">Más rápidos</h3>
-            <p className="text-sm text-muted-foreground">Los 3 vuelos de menor duración</p>
+            <p className="text-sm text-muted-foreground">Los 10 vuelos de menor duración</p>
           </div>
           {fastestFlights.map(renderFlightCard)}
         </TabsContent>
@@ -162,7 +162,7 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
         <TabsContent value="mas-baratos" className="space-y-4 mt-6">
           <div className="text-center mb-4">
             <h3 className="text-lg font-semibold text-foreground">Más baratos</h3>
-            <p className="text-sm text-muted-foreground">Los 3 vuelos con mejor precio</p>
+            <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor precio</p>
           </div>
           {cheapestFlights.map(renderFlightCard)}
         </TabsContent>
