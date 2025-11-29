@@ -123,7 +123,7 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
         </p>
       </div>
 
-      <Tabs defaultValue="mejor-valorados" className="w-full">
+      <Tabs defaultValue="todos-vuelos" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="mejor-valorados" className="flex items-center gap-2">
             <Star className="h-4 w-4" />
