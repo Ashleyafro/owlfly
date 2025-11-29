@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, DollarSign, Clock, Plane } from "lucide-react";
+import { Star, DollarSign, Clock, Plane, List } from "lucide-react";
 
 interface Flight {
   id: string;
@@ -43,7 +43,7 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
   const bestRatedFlights = [...flights].sort((a, b) => b.rating - a.rating).slice(0, 10);
   const fastestFlights = [...flights].sort((a, b) => convertDurationToMinutes(a.duration) - convertDurationToMinutes(b.duration)).slice(0, 10);
   const cheapestFlights = [...flights].sort((a, b) => a.price - b.price).slice(0, 10);
-  const directFlights = flights.filter(flight => flight.isDirect);
+  const allFlights = [...flights].sort(() => Math.random() - 0.5).slice(0, 10);
 
   const renderFlightCard = (flight: Flight) => (
     <Card key={flight.id} className="hover:shadow-lg transition-shadow duration-300 bg-gradient-to-r from-card to-secondary/20">
@@ -137,9 +137,9 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
             <DollarSign className="h-4 w-4" />
             Más baratos
           </TabsTrigger>
-          <TabsTrigger value="vuelos-directos" className="flex items-center gap-2">
-            <Plane className="h-4 w-4" />
-            Vuelos directos
+          <TabsTrigger value="todos-vuelos" className="flex items-center gap-2">
+            <List className="h-4 w-4" />
+            Todos los vuelos
           </TabsTrigger>
         </TabsList>
 
@@ -167,18 +167,12 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
           {cheapestFlights.map(renderFlightCard)}
         </TabsContent>
 
-        <TabsContent value="vuelos-directos" className="space-y-4 mt-6">
+        <TabsContent value="todos-vuelos" className="space-y-4 mt-6">
           <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">Vuelos directos</h3>
-            <p className="text-sm text-muted-foreground">{directFlights.length} vuelos sin escalas</p>
+            <h3 className="text-lg font-semibold text-foreground">Todos los vuelos</h3>
+            <p className="text-sm text-muted-foreground">{allFlights.length} vuelos disponibles</p>
           </div>
-          {directFlights.length > 0 ? (
-            directFlights.map(renderFlightCard)
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No hay vuelos directos disponibles para esta ruta</p>
-            </div>
-          )}
+          {allFlights.map(renderFlightCard)}
         </TabsContent>
       </Tabs>
     </div>
