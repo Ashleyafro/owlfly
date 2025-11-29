@@ -26,9 +26,10 @@ interface FlightResultsProps {
   flights: Flight[];
   origin: string;
   destination: string;
+  hasSearched: boolean;
 }
 
-export const FlightResults = ({ flights, origin, destination }: FlightResultsProps) => {
+export const FlightResults = ({ flights, origin, destination, hasSearched }: FlightResultsProps) => {
   if (flights.length === 0) {
     return null;
   }
@@ -43,7 +44,10 @@ export const FlightResults = ({ flights, origin, destination }: FlightResultsPro
   const bestRatedFlights = [...flights].sort((a, b) => b.rating - a.rating).slice(0, 10);
   const fastestFlights = [...flights].sort((a, b) => convertDurationToMinutes(a.duration) - convertDurationToMinutes(b.duration)).slice(0, 10);
   const cheapestFlights = [...flights].sort((a, b) => a.price - b.price).slice(0, 10);
-  const allFlights = [...flights].sort(() => Math.random() - 0.5).slice(0, 10);
+  // If user has searched, show all filtered results; otherwise show 10 random flights
+  const allFlights = hasSearched 
+    ? [...flights] 
+    : [...flights].sort(() => Math.random() - 0.5).slice(0, 10);
 
   const renderFlightCard = (flight: Flight) => (
     <Card key={flight.id} className="hover:shadow-lg transition-shadow duration-300 bg-gradient-to-r from-card to-secondary/20">

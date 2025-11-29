@@ -105,6 +105,7 @@ const Index = () => {
     const shuffled = [...mockFlights].sort(() => Math.random() - 0.5);
     return shuffled;
   });
+  const [hasSearched, setHasSearched] = useState(false);
   const [searchData, setSearchData] = useState<FlightSearchData | null>({
     origin: "MAD",
     destination: "BCN",
@@ -118,6 +119,7 @@ const Index = () => {
 
   const handleSearch = (data: FlightSearchData) => {
     setSearchData(data);
+    setHasSearched(true);
     
     // Filter flights based on search criteria
     let filteredFlights = mockFlights.filter(flight => {
@@ -166,6 +168,7 @@ const Index = () => {
             flights={searchResults} 
             origin={searchData.origin} 
             destination={searchData.destination}
+            hasSearched={hasSearched}
           />
         )}
       </div>
