@@ -150,7 +150,7 @@ const Index = () => {
         <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center text-primary-foreground">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Encuentra tu Vuelo Ideal
+              Encuentra tu vuelo ideal
             </h1>
             <p className="text-xl md:text-2xl opacity-90">
               Compara precios de las mejores aerolíneas del mundo
