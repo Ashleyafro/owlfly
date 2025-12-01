@@ -128,56 +128,61 @@ export const FlightResults = ({ flights, origin, destination, hasSearched }: Fli
       </div>
 
       <Tabs defaultValue="todos-vuelos" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="mejor-valorados" className="flex items-center gap-2">
-            <Star className="h-4 w-4" />
-            Mejor valorados
-          </TabsTrigger>
-          <TabsTrigger value="mas-rapidos" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            Más rápidos
-          </TabsTrigger>
-          <TabsTrigger value="mas-baratos" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" />
-            Más baratos
-          </TabsTrigger>
-          <TabsTrigger value="todos-vuelos" className="flex items-center gap-2">
-            <List className="h-4 w-4" />
-            Todos los vuelos
-          </TabsTrigger>
-        </TabsList>
+        <div className="flex flex-col lg:flex-row gap-6">
+          <TabsList className="flex flex-col lg:w-64 h-fit space-y-2 p-2">
+            <TabsTrigger value="mejor-valorados" className="flex items-center justify-start gap-2 w-full">
+              <Star className="h-4 w-4" />
+              Mejor valorados
+            </TabsTrigger>
+            <TabsTrigger value="mas-rapidos" className="flex items-center justify-start gap-2 w-full">
+              <Clock className="h-4 w-4" />
+              Más rápidos
+            </TabsTrigger>
+            <TabsTrigger value="mas-baratos" className="flex items-center justify-start gap-2 w-full">
+              <DollarSign className="h-4 w-4" />
+              Más baratos
+            </TabsTrigger>
+            <TabsTrigger value="todos-vuelos" className="flex items-center justify-start gap-2 w-full">
+              <List className="h-4 w-4" />
+              Todos los vuelos
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="mejor-valorados" className="space-y-4 mt-6">
-          <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">Mejor valorados</h3>
-            <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor puntuación</p>
-          </div>
-          {bestRatedFlights.map(renderFlightCard)}
-        </TabsContent>
+          <div className="flex-1">
 
-        <TabsContent value="mas-rapidos" className="space-y-4 mt-6">
-          <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">Más rápidos</h3>
-            <p className="text-sm text-muted-foreground">Los 10 vuelos de menor duración</p>
-          </div>
-          {fastestFlights.map(renderFlightCard)}
-        </TabsContent>
+            <TabsContent value="mejor-valorados" className="space-y-4">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Mejor valorados</h3>
+                <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor puntuación</p>
+              </div>
+              {bestRatedFlights.map(renderFlightCard)}
+            </TabsContent>
 
-        <TabsContent value="mas-baratos" className="space-y-4 mt-6">
-          <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">Más baratos</h3>
-            <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor precio</p>
-          </div>
-          {cheapestFlights.map(renderFlightCard)}
-        </TabsContent>
+            <TabsContent value="mas-rapidos" className="space-y-4">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Más rápidos</h3>
+                <p className="text-sm text-muted-foreground">Los 10 vuelos de menor duración</p>
+              </div>
+              {fastestFlights.map(renderFlightCard)}
+            </TabsContent>
 
-        <TabsContent value="todos-vuelos" className="space-y-4 mt-6">
-          <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">Todos los vuelos</h3>
-            <p className="text-sm text-muted-foreground">{allFlights.length} vuelos disponibles</p>
+            <TabsContent value="mas-baratos" className="space-y-4">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Más baratos</h3>
+                <p className="text-sm text-muted-foreground">Los 10 vuelos con mejor precio</p>
+              </div>
+              {cheapestFlights.map(renderFlightCard)}
+            </TabsContent>
+
+            <TabsContent value="todos-vuelos" className="space-y-4">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Todos los vuelos</h3>
+                <p className="text-sm text-muted-foreground">{allFlights.length} vuelos disponibles</p>
+              </div>
+              {allFlights.map(renderFlightCard)}
+            </TabsContent>
           </div>
-          {allFlights.map(renderFlightCard)}
-        </TabsContent>
+        </div>
       </Tabs>
     </div>
   );
